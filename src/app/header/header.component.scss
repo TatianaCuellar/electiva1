@@ -1,0 +1,26 @@
+@import "src/colors";
+.container-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 15px auto;
+  ul {
+    display: flex;
+    li {
+      list-style: none;
+      margin-right: 1rem;
+      a {
+        color: $primary-color;
+        font-weight: 500;
+
+        &:hover {
+          text-decoration: revert;
+        }
+      }
+    }
+  }
+
+  .my-account {
+    margin-left: auto;
+  }
+}

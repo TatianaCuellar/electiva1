@@ -1,0 +1,40 @@
+@import "src/colors";
+.container {
+
+  .content-question {
+    margin: 70px auto;
+  }
+  .bk-response {
+    text-align: center;
+    img {
+      height: 50vh;
+    }
+  }
+}
+.content-button {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+  padding: 0;
+  gap: 15px;
+  li {
+    list-style: none;
+  }
+}
+.respuesta {
+  display: flex;
+  flex-direction: column;
+  label {
+    margin-bottom: .5rem;
+    input {
+      margin-right: .5rem;
+    }
+  }
+}
+
+img {
+  @media (max-width: 768px) {
+    display: flex;
+    margin: auto;
+  }
+}

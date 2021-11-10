@@ -1,0 +1,95 @@
+<form [formGroup]="data">
+  <div class="container mb-4" [ngSwitch]="step">
+    <div *ngFor="let pregunta of preguntas">
+      <h5 class="text-center">{{pregunta?.descripcion}}</h5>
+      <div *ngFor="let preg of pregunta?.grupo; let i = index" >
+        <ng-container *ngSwitchCase="i + 1">
+          <div class="row content-question">
+            <div class="col bk-response">
+              <img src="assets/img/test.jpg" alt="">
+            </div>
+            <div class="content col-md-7">
+              <div class="row">
+                <div class="respuesta">
+                  <p>{{i + 1}}. {{preg?.title}}</p>
+                  <label class="radio-inline" *ngFor="let res of preg?.respuestas">
+                    <input type="radio" name="respuesta{{i}}" (change)="sumaPuntaje(res, i + 1)" [value]="res?.id">{{res?.title}}
+                  </label>
+                  <div class="buttons d-flex">
+                    <button class="button m-auto"  (click)="changeStep('previous')" [disabled]="step === 1">
+                      Prev
+                    </button>
+
+                    <button class="button m-auto"  (click)="changeStep('next')" [disabled]="step === pregunta?.grupo?.length">
+                      Next
+                    </button>
+                    <a class="button" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="saveResponse()"
+                       *ngIf="!buttonSubmit && step === pregunta?.grupo?.length">Guardar Resultados</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="container">
+            <div class="content-form">
+              <h3 class="text-center">Datos de usuario</h3>
+              <p class="text-center">Ingresa tus datos para poder conocer los resultados del test rápido.</p>
+              <input type="text" formControlName="nombre" placeholder="Nombre">
+              <input type="text" formControlName="apellido" placeholder="Apellido">
+              <input type="text" formControlName="email" placeholder="Email">
+              <input type="submit" value="Enviar" class="mt-3 justify-content-center" [disabled]="data.invalid" (click)="saveExamen()"
+                     data-bs-dismiss="modal"  data-bs-toggle="modal" data-bs-target="#thankyouModal" >
+              <a class="hyperlink" data-bs-dismiss="modal"  data-bs-toggle="modal" >Cancelar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="thankyouModal" tabindex="-1" aria-labelledby="thankyouModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="container">
+            <h3 class="text-center">Test COVID 19</h3>
+            <p class="text-center">Realizado correctamente</p>
+            <p class="text-center" *ngIf="!isResult; else examenPasado">
+              ¡Oh no...! <br>
+              Tu test salió positivo, te recomendamos visitar a tu medico de cabecera, para confirmar estos resultados!
+            </p>
+            <ng-template #examenPasado>
+              <p class="text-center">
+                ¡En hora buena!<br>
+                Tu test salió negativo
+              </p>
+            </ng-template>
+
+            <p class="text-center"> Guarda este código, por si quieres volver a consultar tus resultados </p>
+            <p class="text-center" *ngIf="cargando; else cod">Generando codigo... <br>Espere un momento por favor</p>
+            <ng-template #cod>
+              <small class="text-center">Seleccione el siguiente botón para que se copie automaticamente el código</small>
+              <a class="button m-auto" (click)="Copyable(codigo)"><strong>{{codigo}}</strong></a>
+            </ng-template>
+
+            <div class="content-buttons mt-4 mb-4">
+              <a class="button w-100 justify-content-center" [routerLink]="['/resultados']" [queryParams]="{id: codigo}" data-bs-dismiss="modal" >Ver certificado</a>
+              <a class="text-center hyperlink" [routerLink]="['/']" data-bs-dismiss="modal" >Volver al inicio</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</form>

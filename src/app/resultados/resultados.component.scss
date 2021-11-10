@@ -1,0 +1,44 @@
+@import "src/colors";
+
+.content-buscar {
+  width: 50%;
+  margin: 2rem auto;
+  box-shadow: $shadow;
+  padding: 15px;
+  text-align: center;
+  .button {
+    justify-content: center;
+  }
+}
+
+.card-certicacion {
+  box-shadow: $shadow;
+  text-align: center;
+  padding: 1rem;
+  margin: 1rem auto;
+  display: flex;
+  flex-direction: column;
+
+  .title {
+    color: $primary-color;
+    font-size: 3rem;
+    font-weight: bold;
+  }
+  p {
+    margin: 0;
+    padding: 0;
+  }
+
+  .name {
+    font-size: 2rem;
+    margin: 1rem auto;
+  }
+  .firma {
+    display: flex;
+    flex-direction: column;
+  }
+  hr {
+    width: 30%;
+    margin: auto;
+  }
+}

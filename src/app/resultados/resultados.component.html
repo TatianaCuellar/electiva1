@@ -1,0 +1,48 @@
+<div class="container">
+  <a class="hyperlink justify-content-start" *ngIf="!isBusqueda" (click)="isBusqueda = !isBusqueda">Volver a consultar resultados</a>
+</div>
+<div class="content-buscar" *ngIf="isBusqueda; else buscando">
+  <div class="container">
+    <h1>Consulta de resultados</h1>
+    <p>Ingresa tu correo eléctronico para validar el exámen</p>
+    <div class="content-form">
+      <input type="text" [formControl]="codResultado" placeholder="Ingresa el codigo">
+      <div class="errors">
+        <span *ngIf="codResultado.touched && codResultado.hasError('required')">Este campo es obligatorio</span>
+        <span *ngIf="isProblem">El código que ingresate no es valido, ingresa otro.</span>
+      </div>
+      <button class="button mt-3 w-100" (click)="buscar()" [disabled]="codResultado.invalid">Buscar</button>
+    </div>
+  </div>
+</div>
+<ng-template #buscando>
+  <div class="container">
+    <div class="card-certicacion">
+      <div class="content-cestication">
+        <img src="assets/img/LOGO.png" alt="" width="250" class="m-auto">
+        <div class="decriptions" *ngIf="isCertificated; else descriptionCertificate">
+          <span class="title mb-5">¡A cuidarse!</span>
+          <p class="descirption">Tu test rapido de Covid 19, salió positivo, recuerda cuidarte y visitar a un medico para comprobar que estos resultados sean veridicos</p>
+        </div>
+        <ng-template #descriptionCertificate>
+          <div class="decriptions">
+            <span class="title mb-5">¡Felicitaciones!</span>
+            <p class="descirption">Tu test covid, salio negativo</p>
+            <p class="descirption">Sigue tomando las medidas de cuidado preventivo</p>
+          </div>
+        </ng-template>
+        <span class="name">{{dataResults?.nombre}} {{dataResults?.apellido}}</span>
+        <span class="firma">
+        <img src="assets/img/firma.svg" alt="" width="130" class="m-auto mt-5 mb-3">
+        <hr>
+        <span class="nombre"><strong>Directora general: </strong> <br>Katerin Tatiana Cuellar Pardo</span>
+      </span>
+      </div>
+      <div *ngIf="isCertificated;" class="mt-5 mb-4">
+        <a [routerLink]="['/examen']" class="button m-auto">Realizar examen</a>
+        <a [routerLink]="['/']" class="hyperlink">Volver al inicio</a>
+      </div>
+    </div>
+
+  </div>
+</ng-template>
